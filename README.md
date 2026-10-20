@@ -1,56 +1,88 @@
-# Welcome to your Expo app 👋
+# Expense Tracker
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A small cross-platform expense tracker built with Expo and React Native. It keeps expenses on the device and shows spending totals in Ghana cedis (GHS).
 
-## Get started
+## Features
 
-1. Install dependencies
+- Add, edit, and delete expenses.
+- Record an expense title, amount, category, and date.
+- See all-time and current-month totals.
+- View spending by category.
+- Search expenses by title or category.
+- See the most recent expenses first.
+- Store expense data locally with AsyncStorage. Data is not synced between devices or backed up by this app.
 
-   ```bash
-   npm install
-   ```
+## Requirements
 
-2. Start the app
+- Node.js 22.13 or newer (Expo SDK 57 requirement).
+- npm, included with Node.js.
+- For native development, follow Expo's setup guide for the Android emulator or iOS Simulator. An iOS Simulator requires macOS.
 
-   ```bash
-   npx expo start
-   ```
+## Getting started
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Install the dependencies and start Expo:
 
 ```bash
-npm run reset-project
+npm ci
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Use the terminal shortcuts shown by Expo to open the app on a device or emulator. To start a specific target directly:
 
-### Other setup steps
+```bash
+npm run android
+npm run ios
+npm run web
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Development checks
 
-## Learn more
+Run the TypeScript check with:
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+npx tsc --noEmit
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+The `npm run lint` script is present. ESLint configuration still needs to be set up for this project.
 
-## Join the community
+## EAS builds
 
-Join our community of developers creating universal apps.
+The project is linked to EAS. The `preview` profile in `eas.json` creates an internally distributed Android APK. The `production` profile uses EAS production defaults.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Sign in to Expo if needed:
+
+```bash
+npx eas-cli@latest login
+```
+
+Create a preview APK:
+
+```bash
+npx eas-cli@latest build --profile preview --platform android
+```
+
+Create production builds for Android and iOS:
+
+```bash
+npx eas-cli@latest build --profile production --platform all
+```
+
+See Expo's [EAS Build guide](https://docs.expo.dev/build/setup/) and [`eas.json` reference](https://docs.expo.dev/build/eas-json/) for build and signing details.
+
+## Project structure
+
+```text
+src/
+  app/
+    _layout.tsx       Expo Router stack
+    index.tsx          Expense overview
+    add-expense.tsx    Add and edit form
+  components/
+    chart.tsx          Category spending chart
+  types/
+    expense.ts         Expense data types
+  utils/
+    storage.ts         Local expense storage
+```
+
+Routes are file-based with [Expo Router](https://docs.expo.dev/router/introduction/).
